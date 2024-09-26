@@ -99,12 +99,29 @@ class ConvNeXt(nn.Module):
     def extra_repr(self):
         return f'drop_path_rate={self.drop_path_rate}, layer_scale_init_value={self.layer_scale_init_value:g}'
 
-
 @register_model
-def convnext_tiny(pretrained=False, in_22k=False, **kwargs):
-    model = ConvNeXt(depths=[3, 3, 9, 3], dims=[96, 192, 384, 768], **kwargs)
+def convnext_atto(pretrained=False,in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[2, 2, 6, 2], dims=[40, 80, 160, 320], **kwargs)
     return model
 
+@register_model
+def convnext_femto(pretrained=False,in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[2, 2, 6, 2], dims=[48, 96, 192, 384], **kwargs)
+    return model
+
+@register_model
+def convnext_pico(pretrained=False,in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[2, 2, 6, 2], dims=[64, 128, 256, 512], **kwargs)
+
+@register_model
+def convnext_nano(pretrained=False,in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[2, 2, 8, 2], dims=[80, 160, 320, 640], **kwargs)
+    return model
+
+@register_model
+def convnext_tiny(pretrained=False,in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[3, 3, 9, 3], dims=[96, 192, 384, 768], **kwargs)
+    return model
 
 @register_model
 def convnext_small(pretrained=False, in_22k=False, **kwargs):

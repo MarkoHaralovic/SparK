@@ -12,6 +12,11 @@ from tap import Tap
 
 HP_DEFAULT_NAMES = ['bs', 'ep', 'wp_ep', 'opt', 'base_lr', 'lr_scale', 'wd', 'mixup', 'rep_aug', 'drop_path', 'ema']
 HP_DEFAULT_VALUES = {
+    'convnext_atto':      (1024, 400, 20, 'adam', 0.0002,  0.7, 0.01, 0.8, 3, 0.3,  0.9999),
+    'convnext_femto':     (1024, 400, 20, 'adam', 0.0002,  0.7, 0.01, 0.8, 3, 0.3,  0.9999),
+    'convnext_pico':      (512,  400, 20, 'adam', 0.0002,  0.7, 0.01, 0.8, 3, 0.3,  0.9999),
+    'convnext_nano':      (512,  400, 20, 'adam', 0.0002,  0.7, 0.01, 0.8, 3, 0.3,  0.9999),
+    'convnext_tiny':      (256,  400, 20, 'adam', 0.0002,  0.7, 0.01, 0.8, 3, 0.3,  0.9999),
     'convnext_small':     (4096, 400, 20, 'adam', 0.0002,  0.7, 0.01, 0.8, 3, 0.3,  0.9999),
     'convnext_base':      (4096, 400, 20, 'adam', 0.0001,  0.7, 0.01, 0.8, 3, 0.4,  0.9999),
     'convnext_large':     (4096, 200, 10, 'adam', 0.0001,  0.7, 0.02, 0.8, 3, 0.5,  0.9999),
