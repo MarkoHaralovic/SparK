@@ -141,24 +141,32 @@ class LayerNorm(nn.Module):
             x = self.weight[:, None, None] * x + self.bias[:, None, None]
             return x
 
-
+# pretrained weights available at https://github.com/facebookresearch/ConvNeXt, https://github.com/facebookresearch/ConvNeXt-V2
 model_urls = {
-    "convnext_tiny_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_tiny_1k_224_ema.pth",
-    "convnext_small_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_small_1k_224_ema.pth",
-    "convnext_base_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_base_1k_224_ema.pth",
-    "convnext_large_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_large_1k_224_ema.pth",
-    "convnext_tiny_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_tiny_22k_224.pth",
-    "convnext_small_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_small_22k_224.pth",
-    "convnext_base_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_base_22k_224.pth",
-    "convnext_large_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_large_22k_224.pth",
-    "convnext_xlarge_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_xlarge_22k_224.pth",
+    "convnext_atto_1k" : "https://dl.fbaipublicfiles.com/convnext/convnextv2/im1k/convnextv2_atto_1k_224_ema.pt", #ConvNeXt-V2 ImageNet1k fine-tuning
+    "convnext_femto_1k" : "https://dl.fbaipublicfiles.com/convnext/convnextv2/im1k/convnextv2_femto_1k_224_ema.pt", #ConvNeXt-V2 ImageNet1k fine-tuning
+    "convnext_pico_1k" : "https://dl.fbaipublicfiles.com/convnext/convnextv2/im1k/convnextv2_pico_1k_224_ema.pt", #ConvNeXt-V2 ImageNet1k fine-tuning
+    "convnext_nano_1k" : "https://dl.fbaipublicfiles.com/convnext/convnextv2/im1k/convnextv2_nano_1k_224_ema.pt", #ConvNeXt-V2 ImageNet1k fine-tuning
+    "convnext_huge_1k" : "https://dl.fbaipublicfiles.com/convnext/convnextv2/im1k/convnextv2_huge_1k_224_ema.pt", #ConvNeXt-V2 ImageNet1k fine-tuning
+    "convnext_tiny_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_tiny_1k_224_ema.pth", #ConvNeXt-V1 supervised training
+    "convnext_small_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_small_1k_224_ema.pth", #ConvNeXt-V1 supervised training
+    "convnext_base_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_base_1k_224_ema.pth", #ConvNeXt-V1 supervised training
+    "convnext_large_1k": "https://dl.fbaipublicfiles.com/convnext/convnext_large_1k_224_ema.pth", #ConvNeXt-V1 supervised training
+    "convnext_nano_22k" : "https://dl.fbaipublicfiles.com/convnext/convnextv2/im22k/convnextv2_nano_22k_224_ema.pt", #ConvNeXt-V2 ImageNet22k fine-tuning
+    "convnext_tiny_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_tiny_22k_224.pth", #ConvNeXt-V1 supervised training
+    "convnext_small_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_small_22k_224.pth", #ConvNeXt-V1 supervised training
+    "convnext_base_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_base_22k_224.pth", #ConvNeXt-V1 supervised training
+    "convnext_large_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_large_22k_224.pth", #ConvNeXt-V1 supervised training
+    "convnext_xlarge_22k": "https://dl.fbaipublicfiles.com/convnext/convnext_xlarge_22k_224.pth", #ConvNeXt-V1 supervised training
 }
 
 @register_model
 def convnext_atto(pretrained=False,in_22k=False, **kwargs):
     model = ConvNeXt(depths=[2, 2, 6, 2], dims=[40, 80, 160, 320], **kwargs)
     if pretrained:
-        url = model_urls['convnext_atto_22k'] if in_22k else model_urls['convnext_atto_1k']
+        if in_22k:
+            raise NotImplementedError("Add weights to load.")
+        url = model_urls['convnext_atto_1k']
         checkpoint = torch.hub.load_state_dict_from_url(url=url, map_location="cpu", check_hash=True)
         model.load_state_dict(checkpoint["model"])
     return model
@@ -167,7 +175,9 @@ def convnext_atto(pretrained=False,in_22k=False, **kwargs):
 def convnext_femto(pretrained=False,in_22k=False, **kwargs):
     model = ConvNeXt(depths=[2, 2, 6, 2], dims=[48, 96, 192, 384], **kwargs)
     if pretrained:
-        url = model_urls['convnext_femto_22k'] if in_22k else model_urls['convnext_femto_1k']
+        if in_22k:
+            raise NotImplementedError("Add weights to load.")
+        url = model_urls['convnext_atto_1k']
         checkpoint = torch.hub.load_state_dict_from_url(url=url, map_location="cpu", check_hash=True)
         model.load_state_dict(checkpoint["model"])
     return model
@@ -176,7 +186,9 @@ def convnext_femto(pretrained=False,in_22k=False, **kwargs):
 def convnext_pico(pretrained=False,in_22k=False, **kwargs):
     model = ConvNeXt(depths=[2, 2, 6, 2], dims=[64, 128, 256, 512], **kwargs)
     if pretrained:
-        url = model_urls['convnext_pico_22k'] if in_22k else model_urls['convnext_pico_1k']
+        if in_22k:
+            raise NotImplementedError("Add weights to load.")
+        url = model_urls['convnext_atto_1k']
         checkpoint = torch.hub.load_state_dict_from_url(url=url, map_location="cpu", check_hash=True)
         model.load_state_dict(checkpoint["model"])
     return model
@@ -232,6 +244,17 @@ def convnext_xlarge(pretrained=False, in_22k=False, **kwargs):
     if pretrained:
         assert in_22k, "only ImageNet-22K pre-trained ConvNeXt-XL is available; please set in_22k=True"
         url = model_urls['convnext_xlarge_22k']
+        checkpoint = torch.hub.load_state_dict_from_url(url=url, map_location="cpu")
+        model.load_state_dict(checkpoint["model"])
+    return model
+
+@register_model
+def convnext_huge(pretrained=False, in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[3, 3, 27, 3], dims=[352, 704, 1408, 2816], **kwargs)
+    if pretrained:
+        if in_22k:
+            raise NotImplementedError("Add weights to load.")
+        url = model_urls['convnext_huge_1k']
         checkpoint = torch.hub.load_state_dict_from_url(url=url, map_location="cpu")
         model.load_state_dict(checkpoint["model"])
     return model

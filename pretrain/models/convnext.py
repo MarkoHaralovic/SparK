@@ -128,15 +128,22 @@ def convnext_small(pretrained=False, in_22k=False, **kwargs):
     model = ConvNeXt(depths=[3, 3, 27, 3], dims=[96, 192, 384, 768], **kwargs)
     return model
 
-
 @register_model
 def convnext_base(pretrained=False, in_22k=False, **kwargs):
     model = ConvNeXt(depths=[3, 3, 27, 3], dims=[128, 256, 512, 1024], **kwargs)
     return model
-
 
 @register_model
 def convnext_large(pretrained=False, in_22k=False, **kwargs):
     model = ConvNeXt(depths=[3, 3, 27, 3], dims=[192, 384, 768, 1536], **kwargs)
     return model
 
+@register_model
+def convnext_xlarge(pretrained=False, in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[3, 3, 27, 3], dims=[256, 512, 1024, 2048], **kwargs)
+    return model
+
+@register_model
+def convnext_huge(pretrained=False, in_22k=False, **kwargs):
+    model = ConvNeXt(depths=[3, 3, 27, 3], dims=[352, 704, 1408, 2816], **kwargs)
+    return model
